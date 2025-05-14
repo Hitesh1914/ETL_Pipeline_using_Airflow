@@ -1,0 +1,24 @@
+version: '3'  # Use version 3 of the Docker Compose file format
+services:     # Define the services to be run in containers
+  postgres:
+    image: postgres:13   # Use the official PostgreSQL image from Docker Hub
+    container_name: postgres_db  # Name the container for easier reference
+    environment:                 # Set environment variables for PostgreSQL 
+      POSTGRES_USER: postgres     # Default PostgreSQL user 
+      POSTGRES_PASSWORD: postgres  # Default PostgreSQL password
+      POSTGRES_DB: postgres_db     # Default PostgreSQL database name
+    ports:
+      - "5432:543280"     # Map port 5432 on the host to port 5432 in the container
+    volumes:              # Mount a volume for persistent data storage
+      - postgres_data:/var/lib/postgresql/data  # Store PostgreSQL data in a named volume wheneevre there is a change in the data
+    networks:                               
+      - airflow_network                      # Connect to the custom network
+
+
+networks:                   # create new network for the services if not already created
+  airflow_network:                     # Define a custom network for the services
+    external: false                 # Use an external network (must be created beforehand)  
+
+volumes:
+  postgres_data:                 # Define a named volume for PostgreSQL data if not already created
+   
